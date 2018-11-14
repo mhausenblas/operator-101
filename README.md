@@ -14,13 +14,14 @@ See also the following references for more information:
 
 ## Setting the scene
 
-All the business goes on in a dedicated namespace:
+All the business below goes on in a dedicated namespace, we call it `ndp-demo`:
 
 ```
 $ kubectl create ns ndp-demo
 ```
 
-STEP 1—preparation:
+STEP 1—As a preparation, [install the Operator SDK](https://github.com/operator-framework/operator-sdk#prerequisites) and then
+bootstrap the operator like so:
 
 ```
 $ cd $GOPATH/src/github.com/mhausenblas
@@ -28,9 +29,13 @@ $ operator-sdk new nodefpol-operator
 $ cd nodefpol-operator
 ```
 
+As a result we should see something like this:
+
+![STEP-1 outcome](img/STEP-1_outputof_new_app-operator.png)
+
 See also [terminal output](STEP-1_outputof_new_app-operator.md) of above command.
 
-STEP 2—add a new API for the custom resource NoDefaultsPolicy:
+STEP 2—Next, we add a new API for the custom resource `NoDefaultsPolicy`:
 
 ```
 $ pwd
@@ -39,28 +44,40 @@ $ pwd
 $ operator-sdk add api --api-version=nodefpol.k8space.io/v1alpha1 --kind=NoDefaultsPolicy
 ```
 
+As a result we should see something like this:
+
+![STEP-2 outcome](img/STEP-2_outputof_add_api.png)
+
 See also [terminal output](STEP-2_outputof_add_api.md) of above command.
 
-STEP 3—add a new controller that watches for NoDefaultsPolicy:
+STEP 3—Now we add a new controller that watches for `NoDefaultsPolicy` resources:
 
 ```
 $ operator-sdk add controller --api-version=nodefpol.k8space.io/v1alpha1 --kind=NoDefaultsPolicy
 ```
 
+As a result we should see something like this:
+
+![STEP-3 outcome](img/STEP-3_outputof_add_controller.png)
+
 See also [terminal output](STEP-3_outputof_add_controller.md) of above command.
 
 ## Local deployment
 
-STEP 4—install CRD and launch the operator locally:
+STEP 4—Install the custom resource definition (CRD) and launch the operator locally:
 
 ```
 $ kubectl -n ndp-demo apply -f deploy/crds/nodefpol_v1alpha1_nodefaultspolicy_crd.yaml
 $ OPERATOR_NAME=nodefpol-operator operator-sdk up local --namespace "ndp-demo"
 ```
 
+As a result we should see something like this:
+
+![STEP-4 outcome](img/STEP-4_outputof_operator-sdk-up.png)
+
 See also [terminal output](STEP-4_outputof_operator-sdk-up.md) of above command.
 
-Create a `NoDefaultsPolicy` custom resource (note that the default controller will watch for NoDefaultsPolicy objects for each CR):
+Now it's time to create a `NoDefaultsPolicy` custom resource. Also, note that the default controller will watch for `NoDefaultsPolicy` objects for each custom resource we create:
 
 ```
 $ kubectl -n ndp-demo apply -f deploy/crds/nodefpol_v1alpha1_nodefaultspolicy_cr.yaml
@@ -68,23 +85,24 @@ $ kubectl -n ndp-demo apply -f deploy/crds/nodefpol_v1alpha1_nodefaultspolicy_cr
 
 ## In-cluster deployment
 
-In order to deploy the operator into the cluster, we build a container image, push it to a registry,
-and then create the necessary resources (SA, roles, CRD, etc.).
+In order to deploy the operator into the cluster, we first build a container image and push it to a registry,
+and then create the necessary resources such as a service account, RBAC roles & bindings, the CRD itself, and a custom resource instance, 
+and deploy the operator.
 
-STEP 5—build and push the app-operator image to a public registry (note: make sure you're logged into registry, first):
+STEP 5—Starting off by building a container image and pushing it to a public registry (note: make sure you're logged into registry, in my case Quay.io, first):
 
 ```
 $ operator-sdk build quay.io/mhausenblas/nodefpol
 $ docker push quay.io/mhausenblas/nodefpol
 ```
 
-Update the operator manifest to use the built image name:
+Make sure to update the operator manifest to use the built image name (`quay.io/mhausenblas/nodefpol` in my case):
 
 ```
 $ sed -i "" 's|REPLACE_IMAGE|quay.io/mhausenblas/nodefpol|g' deploy/operator.yaml
 ```
 
-STEP 6—set up service account, and  RBAC roles and bindings:
+STEP 6—First, we set up a dedicated service account as well as the respective RBAC roles and bindings:
 
 ```
 $ kubectl -n ndp-demo apply -f deploy/service_account.yaml
@@ -92,25 +110,25 @@ $ kubectl -n ndp-demo apply -f deploy/role.yaml
 $ kubectl -n ndp-demo apply -f deploy/role_binding.yaml
 ```
 
-STEP 7—set up the CRD (if not already done for local deployment):
+STEP 7—We install the custom resource definition (CRD), if not already done for local deployment:
 
 ```
 $ kubectl -n ndp-demo apply -f deploy/crds/nodefpol_v1alpha1_nodefaultspolicy_crd.yaml
 ```
 
-STEP 8—deploy the operator:
+STEP 8—Time to deploy the operator:
 
 ```
 $ kubectl -n ndp-demo apply -f deploy/operator.yaml
 ```
 
-STEP 9—create a `NoDefaultsPolicy` custom resource (if not already done for local deployment):
+STEP 9—Now we create a `NoDefaultsPolicy` custom resource, if not already done for local deployment:
 
 ```
 $ kubectl -n ndp-demo apply -f deploy/crds/nodefpol_v1alpha1_nodefaultspolicy_cr.yaml
 ```
 
-To clean up:
+To clean up, getting rid of all the resources including the custom resources and CRD we installed, do:
 
 ```
 $ kubectl delete ns ndp-demo
@@ -119,4 +137,7 @@ $ kubectl delete ns ndp-demo
 ## Development
 
 The Operator SDK creates a ton of boot-strapping code and config, however, now your work starts. 
-To start this process, find `//TODO(user)` annotations in the Go source code and start implementing your custom logic.
+To start this process, find `//TODO(user)` annotations in the Go source code and start implementing your custom logic. 
+For example, in my VS Code environment, it looks something like this:
+
+![Starting points for coding the controller](img/custom-controller-dev.png)
