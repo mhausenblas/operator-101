@@ -12,7 +12,7 @@ See also the following references for more information:
 - [Operator Lifecycle Manager](https://itnext.io/wth-is-a-operator-lifecycle-manager-873cf1661b04) 
 - [Building an Kubernetes Operator for Prometheus and Thanos](https://robszumski.com/building-an-operator/)
 
-### Bootstrapping operator
+## Setting the scene
 
 All the business goes on in a dedicated namespace:
 
@@ -49,7 +49,7 @@ $ operator-sdk add controller --api-version=nodefpol.k8space.io/v1alpha1 --kind=
 
 See also [terminal output](STEP-3_outputof_add_controller.md) of above command.
 
-### Local deployment
+## Local deployment
 
 STEP 4—install CRD and launch the operator locally:
 
@@ -66,7 +66,7 @@ Create a `NoDefaultsPolicy` custom resource (note that the default controller wi
 $ kubectl -n ndp-demo apply -f deploy/crds/nodefpol_v1alpha1_nodefaultspolicy_cr.yaml
 ```
 
-### In-cluster deployment
+## In-cluster deployment
 
 In order to deploy the operator into the cluster, we build a container image, push it to a registry,
 and then create the necessary resources (SA, roles, CRD, etc.).
@@ -116,6 +116,7 @@ To clean up:
 $ kubectl delete ns ndp-demo
 ```
 
-### Development
+## Development
 
-The Operator SDK creates a ton of boot-strapping code and config, however, now your work starts. To start this process, find `//TODO(user)` annotations in the Go source code and start implementing your custom logic.
+The Operator SDK creates a ton of boot-strapping code and config, however, now your work starts. 
+To start this process, find `//TODO(user)` annotations in the Go source code and start implementing your custom logic.
