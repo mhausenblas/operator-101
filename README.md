@@ -2,6 +2,8 @@
 
 In the following, I'm showing you how to bootstrap a Kubernetes operator using the [Operator SDK](https://github.com/operator-framework/operator-sdk).
 
+Table of contents:
+
 - [Setting the scene](#setting-the-scene)
 - [Deploying the operator locally](#local-deployment)
 - [Deploying the operator into a cluster](#in-cluster-deployment)
