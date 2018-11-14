@@ -2,15 +2,11 @@
 
 In the following, I'm showing you how to bootstrap a Kubernetes operator using the [Operator SDK](https://github.com/operator-framework/operator-sdk).
 
-See also the following references for more information:
-
-- [CLI reference](https://github.com/operator-framework/operator-sdk/blob/master/doc/sdk-cli-reference.md)
-- [User Guide](https://github.com/operator-framework/operator-sdk/blob/master/doc/user-guide.md)
-- [Building an operator for Kubernetes with operator-sdk](https://itnext.io/building-an-operator-for-kubernetes-with-operator-sdk-40a029ea056)
-- [A complete guide to Kubernetes Operator SDK](https://banzaicloud.com/blog/operator-sdk/)
-- [Make a Kubernetes Operator in 15 minutes with Helm](https://blog.openshift.com/make-a-kubernetes-operator-in-15-minutes-with-helm/)
-- [Operator Lifecycle Manager](https://itnext.io/wth-is-a-operator-lifecycle-manager-873cf1661b04) 
-- [Building an Kubernetes Operator for Prometheus and Thanos](https://robszumski.com/building-an-operator/)
+- [Setting the scene](#setting-the-scene)
+- [Deploying the operator locally](#local-deployment)
+- [Deploying the operator into a cluster](#in-cluster-deployment)
+- [Development of the custom controller](#development)
+- [References](#references)
 
 ## Setting the scene
 
@@ -141,3 +137,15 @@ To start this process, find `//TODO(user)` annotations in the Go source code and
 For example, in my VS Code environment, it looks something like this:
 
 ![Starting points for coding the controller](img/custom-controller-dev.png)
+
+## References
+
+To learn more on the topic, check out the following references:
+
+- [CLI reference](https://github.com/operator-framework/operator-sdk/blob/master/doc/sdk-cli-reference.md)
+- [User Guide](https://github.com/operator-framework/operator-sdk/blob/master/doc/user-guide.md)
+- [Building an operator for Kubernetes with operator-sdk](https://itnext.io/building-an-operator-for-kubernetes-with-operator-sdk-40a029ea056)
+- [A complete guide to Kubernetes Operator SDK](https://banzaicloud.com/blog/operator-sdk/)
+- [Make a Kubernetes Operator in 15 minutes with Helm](https://blog.openshift.com/make-a-kubernetes-operator-in-15-minutes-with-helm/)
+- [Operator Lifecycle Manager](https://itnext.io/wth-is-a-operator-lifecycle-manager-873cf1661b04) 
+- [Building an Kubernetes Operator for Prometheus and Thanos](https://robszumski.com/building-an-operator/)
