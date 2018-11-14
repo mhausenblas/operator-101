@@ -1,52 +1,16 @@
-# Extending Kubernetes 101 demos
+## Bootstrapping a Kubernetes operator
 
-## kubectl plugin
+In the following, I'm showing you how to bootstrap a Kubernetes operator using the [Operator SDK](https://github.com/operator-framework/operator-sdk).
 
-I have a plugin called `inspect` that renders a resources in YAML:
-
-```
-$ kubectl plugin list
-The following kubectl-compatible plugins are available:
-
-/Users/mhausenblas/bin/kubectl-inspect
-
-$ cat /Users/mhausenblas/bin/kubectl-inspect
-#!/bin/bash
-kubectl get "$@" -o yaml | bat -l yaml -p
-
-$ kubectl inspect svc/kubernetes
-apiVersion: v1
-kind: Service
-metadata:
-  creationTimestamp: 2018-11-09T20:22:32Z
-  labels:
-    component: apiserver
-    provider: kubernetes
-  name: kubernetes
-  namespace: default
-  resourceVersion: "35"
-  selfLink: /api/v1/namespaces/default/services/kubernetes
-  uid: 2fd4175e-e45d-11e8-8911-ca17f3440361
-spec:
-  clusterIP: 10.96.0.1
-  ports:
-  - name: https
-    port: 443
-    protocol: TCP
-    targetPort: 8443
-  sessionAffinity: None
-  type: ClusterIP
-status:
-  loadBalancer: {}
-```
-
-## Operator
-
-Using the [Operator SDK](https://github.com/operator-framework/operator-sdk). 
-See also docs:
+See also the following references for more information:
 
 - [CLI reference](https://github.com/operator-framework/operator-sdk/blob/master/doc/sdk-cli-reference.md)
 - [User Guide](https://github.com/operator-framework/operator-sdk/blob/master/doc/user-guide.md)
+- [Building an operator for Kubernetes with operator-sdk](https://itnext.io/building-an-operator-for-kubernetes-with-operator-sdk-40a029ea056)
+- [A complete guide to Kubernetes Operator SDK](https://banzaicloud.com/blog/operator-sdk/)
+- [Make a Kubernetes Operator in 15 minutes with Helm](https://blog.openshift.com/make-a-kubernetes-operator-in-15-minutes-with-helm/)
+- [Operator Lifecycle Manager](https://itnext.io/wth-is-a-operator-lifecycle-manager-873cf1661b04) 
+- [Building an Kubernetes Operator for Prometheus and Thanos](https://robszumski.com/building-an-operator/)
 
 ### Bootstrapping operator
 
