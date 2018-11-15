@@ -5,7 +5,7 @@ The goal is to bootstrap an operator (custom resource and controller) that monit
 We call this operator the no-defaults-policy operator, and its main task is to flag pods using the default service account (a security anti-pattern).
 Strictly speaking, this is not the best use case for an operator since it's not really about the life cycle management of an app: a number of alternative solutions, 
 from a simple controller to a shell script using `kubectl` would do the same job. However, since it's conceptually easy to understand what the operator's job is and
-the custom resources gives us a nice way to configure the actual behavior—for example, annotate the pod or to the more extreme measure to delete its owner, such as a deployment—we do it nevertheless.
+the custom resources gives us a nice way to configure the actual behavior, the policy enforcement—for example, annotating the pod or a more extreme measure like deleting its owner, such as a deployment—we do it nevertheless.
 May the Kube gods have mercy on us.
 
 Table of contents:
