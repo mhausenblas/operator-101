@@ -6,6 +6,7 @@ We call this operator the no-defaults-policy operator, and its main task is to f
 Strictly speaking, this is not the best use case for an operator since it's not really about the life cycle management of an app: a number of alternative solutions, 
 from a simple controller to a shell script using `kubectl` would do the same job. However, since it's conceptually easy to understand what the operator's job is and
 the custom resources gives us a nice way to configure the actual behavior, the policy enforcement—for example, annotating the pod or a more extreme measure like deleting its owner, such as a deployment—we do it nevertheless.
+Also, others also seem to be fine with applying the operator pattern in such a context, see for example the [rbac-manager/](https://reactiveops.github.io/rbac-manager/).
 May the Kube gods have mercy on us.
 
 Table of contents:
